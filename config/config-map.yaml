@@ -1,0 +1,16 @@
+# This specifies the API version being used - v1 is the core/stable API group in Kubernetes
+apiVersion: v1
+
+# Defines that this is a ConfigMap resource - used to store non-confidential configuration data
+kind: ConfigMap
+
+# Metadata section contains information about this ConfigMap
+metadata:
+  # The name of this ConfigMap - this is how other resources will reference it
+  name: app-config           
+
+# The actual configuration data stored as key-value pairs
+data:
+  # APP_MESSAGE is the environment variable name that will be used in the container
+  # The value "Hello from ConfigMap THARIDNIIIII MOdi!" will be passed to the container
+  APP_MESSAGE: "Hello from ConfigMap THARIDNIIIII MOdi!"

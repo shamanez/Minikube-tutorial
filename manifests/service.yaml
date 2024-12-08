@@ -1,0 +1,27 @@
+# Specifies the API version we're using - v1 is the core API group in Kubernetes
+apiVersion: v1
+
+# Defines that we're creating a Service resource type
+kind: Service
+
+# Metadata section contains information about this service
+metadata:
+  # The name of our service - this is how we'll refer to it
+  name: hello-world-service
+
+# The main specification for our service
+spec:
+  # Selector defines which pods this service will route traffic to
+  # Will select pods with label app: hello-world (matches our deployment)
+  selector:
+    app: hello-world
+
+  # Defines what ports this service will listen on and forward
+  ports:
+  - protocol: TCP          # Using TCP protocol for communication
+    port: 80              # Port that the service exposes externally
+    targetPort: 5000      # Port on the pods where traffic will be sent to
+
+  # LoadBalancer type means this service will be accessible from outside the cluster
+  # Cloud providers will automatically provision a load balancer for this service
+  type: LoadBalancer

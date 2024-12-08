@@ -1,0 +1,44 @@
+# Specifies the Kubernetes API version being used - apps/v1 is for Deployment resources
+apiVersion: apps/v1
+
+# Defines this as a Deployment resource - used to manage replicated Pods
+kind: Deployment
+
+# Metadata section contains information about this Deployment
+metadata:
+  # Name of the deployment
+  name: hello-world-deployment
+
+# Specification section defines desired state of the Deployment
+spec:
+  # Number of replica Pods to run
+  replicas: 3
+
+  # Defines how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      # Selects Pods with label app: hello-world
+      app: hello-world
+
+  # Template for creating new Pods
+  template:
+    metadata:
+      # Labels attached to the Pods
+      labels:
+        app: hello-world
+    spec:
+      # Container specifications
+      containers:
+      - name: hello-world # Container name
+        image: hello-world:latest # Docker image to use
+        imagePullPolicy: Never # Don't try to pull image from registry
+        ports:
+        - containerPort: 5000 # Port the container exposes
+        # Environment variables for the container
+        env:
+        - name: APP_MESSAGE # Environment variable name
+          valueFrom:
+            # Get value from a ConfigMap
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: APP_MESSAGE # Key in the ConfigMap to use
